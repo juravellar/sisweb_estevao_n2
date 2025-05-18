@@ -23,7 +23,6 @@ public class CarrinhoDeComprasServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         HttpSession httpSession = req.getSession();
         UsuarioModel usuario = (UsuarioModel) httpSession.getAttribute("usuario");
 

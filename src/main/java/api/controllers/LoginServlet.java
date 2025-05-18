@@ -1,5 +1,6 @@
 package api.controllers;
 
+import api.dao.ProdutoDao;
 import api.dao.UsuarioDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -34,6 +35,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
+        req.setAttribute("produtos", ProdutoDao.listarTodos());
         if (email.equals("admin@admin") && senha.equals("admin")) {
             resp.sendRedirect("telaInicialAdmin.jsp");
             session.setAttribute("tipo", "admin");
@@ -60,7 +62,6 @@ public class LoginServlet extends HttpServlet {
         // Usuário comum
         session.setAttribute("tipo", "usuario");
         session.setAttribute("usuario", usuario);
-        resp.sendRedirect("telaInicial.jsp");
+        req.getRequestDispatcher("telaInicial.jsp").forward(req, resp);
     }
-
 }

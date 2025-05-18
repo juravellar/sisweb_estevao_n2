@@ -19,10 +19,10 @@
 <!-- Botão voltar -->
 <button class="flex w-30 h-fit items-center cursor-pointer justify-center rounded-md bg-white px-4 py-1.5 text-sm
                font-semibold text-indigo-600 shadow-sm border border-indigo-600 hover:bg-gray-100">
-    <a href="login.jsp" class="flex w-full text-base cursor-pointer">&larr; Voltar</a>
+    <a href="login.jsp" class="flex w-full text-base cursor-pointer">&larr; Sair da conta</a>
 </button>
 
-<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+<div class="flex min-h-full flex-col justify-center w-full px-6 py-12 lg:px-8">
     <!-- Cabeçalho -->
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img class="mx-auto h-10 w-auto"
@@ -37,8 +37,8 @@
     </div>
 
     <!-- Lista de produtos -->
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-lg">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="mt-10 sm:mx-auto w-full">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             <c:choose>
                 <c:when test="${empty produtos}">
                     <p class="text-gray-700 mb-4">Nenhum produto encontrado.</p>

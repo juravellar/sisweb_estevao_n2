@@ -33,7 +33,7 @@
     <div class="flex w-full items-center">
         <button class="flex w-30 h-fit items-center justify-center rounded-md bg-white px-4 py-1.5 text-sm
                        font-semibold text-indigo-600 shadow-sm border border-indigo-600 hover:bg-gray-100">
-            <a href="login.jsp" class="flex w-full text-base cursor-pointer">&larr; Voltar</a>
+            <a href="login.jsp" class="flex w-full text-base cursor-pointer">&larr; Sair da conta</a>
         </button>
         <h1 class="flex-1 text-3xl font-bold text-center">Painel do Administrador</h1>
     </div>
@@ -73,16 +73,16 @@
                                 <td class="py-2 px-4 border-b">${produto.nome}</td>
                                 <td class="py-2 px-4 border-b">R$ ${produto.preco}</td>
                                 <td class="text-center py-2 px-4 border-b">
-                                    <!-- EDITAR -->
-                                    <form action="${pageContext.request.contextPath}/produto/editar" method="post" style="display:inline;">
-                                        <input type="hidden" name="id"               value="${produto.id}"/>
-                                        <input type="hidden" name="nome-produto"     value="${produto.nome}"/>
-                                        <input type="hidden" name="preco-produto"    value="${produto.preco}"/>
-                                        <input type="hidden" name="descricao-produto" value="${produto.descricao}"/>
-                                        <button class="bg-blue-100 hover:bg-blue-200 text-blue-800 py-1 px-2 rounded text-xs">
-                                            Editar
-                                        </button>
-                                    </form>
+<%--                                    <!-- EDITAR -->--%>
+<%--                                    <form action="${pageContext.request.contextPath}/produto/editar" method="post" style="display:inline;">--%>
+<%--                                        <input type="hidden" name="id"               value="${produto.id}"/>--%>
+<%--                                        <input type="hidden" name="nome-produto"     value="${produto.nome}"/>--%>
+<%--                                        <input type="hidden" name="preco-produto"    value="${produto.preco}"/>--%>
+<%--                                        <input type="hidden" name="descricao-produto" value="${produto.descricao}"/>--%>
+<%--                                        <button class="bg-blue-100 hover:bg-blue-200 text-blue-800 py-1 px-2 rounded text-xs">--%>
+<%--                                            Editar--%>
+<%--                                        </button>--%>
+<%--                                    </form>--%>
                                     <!-- EXCLUIR -->
                                     <form action="${pageContext.request.contextPath}/produto/deletar" method="post" style="display:inline;"
                                           onsubmit="return confirm('Tem certeza?');">
@@ -102,7 +102,7 @@
     </div>
 
     <!-- Formulário de cadastro -->
-    <form action="cadastroProduto" method="post"
+    <form action="telaInicialAdmin" method="post"
           class="bg-white p-6 rounded shadow-md mb-4 space-y-4">
         <h3 class="text-xl font-semibold">Adicionar Novo Produto</h3>
 
