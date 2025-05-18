@@ -28,21 +28,6 @@ O objetivo é disponibilizar uma API REST e um front-end simples para demonstrar
 
 ---
 
-## Diagrama de alto nível
-
-```mermaid
-graph TD
-  A[Cliente<br/>(React/HTML)] -- HTTP/JSON --> B(Spring Boot API)
-  B -- JPA --> C[(PostgreSQL)]
-  C -. docker network .- B
-  subgraph Docker Compose
-    B
-    C
-  end
-````
-
----
-
 ## Requisitos
 
 | Ferramenta   | Versão sugerida | Observação                                        |
