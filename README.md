@@ -15,15 +15,31 @@ O objetivo é disponibilizar uma API REST e um front-end simples para demonstrar
 ---
 ## Índice
 
-1. [Requisitos](#requisitos)  
-2. [Subindo o projeto](#subindo-o-projeto)  
-3. [Coleção de rotas](#coleção-de-rotas)  
-4. [Estrutura de pastas](#estrutura-de-pastas)  
-5. [Variáveis de ambiente](#variáveis-de-ambiente)  
-6. [Scripts úteis](#scripts-úteis)  
-7. [Roadmap](#roadmap)  
-8. [Contribuição](#contribuição)  
-9. [Licença](#licença)
+1. [Diagrama de alto nível](#diagrama-de-alto-nível)  
+2. [Requisitos](#requisitos)  
+3. [Subindo o projeto](#subindo-o-projeto)  
+4. [Coleção de rotas](#coleção-de-rotas)  
+5. [Estrutura de pastas](#estrutura-de-pastas)  
+6. [Variáveis de ambiente](#variáveis-de-ambiente)  
+7. [Scripts úteis](#scripts-úteis)  
+8. [Roadmap](#roadmap)  
+9. [Contribuição](#contribuição)  
+10. [Licença](#licença)
+
+---
+
+## Diagrama de alto nível
+
+```mermaid
+graph TD
+  A[Cliente<br/>(React/HTML)] -- HTTP/JSON --> B(Spring Boot API)
+  B -- JPA --> C[(PostgreSQL)]
+  C -. docker network .- B
+  subgraph Docker Compose
+    B
+    C
+  end
+````
 
 ---
 
@@ -56,15 +72,25 @@ docker compose up --build
 
 Os logs da aplicação ficam disponíveis em tempo real no console do Docker Compose.
 
-### 2. Sem Docker (ambiente local)
+### 2. Sem Docker (com Apache Tomcat)
 
-1. Crie um banco PostgreSQL chamado **siswebdb** e atualize `src/main/resources/application.yml`.
-2. Compile o projeto:
+1. Certifique-se de ter o **Apache Tomcat** instalado (versão 10+ recomendada).
+2. Compile o projeto com Maven:
 
 ```bash
-./mvnw clean spring-boot:run
+mvn clean install
 ```
 
+3. Será gerado um arquivo `.war` em `target/sisweb_estevao_n2.war`.
+4. Copie esse arquivo `.war` para a pasta `webapps/` do Tomcat.
+5. Inicie o servidor Tomcat (via terminal ou painel de controle).
+6. Acesse a aplicação em:
+
+```
+http://localhost:8080/api/
+```
+
+> **Nota:** Verifique se as configurações de conexão com o banco estão corretas em `src/main/resources/hibernate.cfg.xml`.
 ---
 
 ## Coleção de rotas
