@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  java-app:
+    build: .
+    container_name: sisweb_estevao_n2
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+
+  postgres:
+    image: postgres:16
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: sisweb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
