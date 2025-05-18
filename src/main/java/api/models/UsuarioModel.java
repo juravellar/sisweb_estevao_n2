@@ -30,18 +30,6 @@ public class UsuarioModel {
         // construtor padrão necessário para Hibernate
     }
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<ItemCarrinhoModel> itensCarrinho = new ArrayList<>();
-
-    public List<ItemCarrinhoModel> getItensCarrinho() {
-        return itensCarrinho;
-    }
-
-    public void setItensCarrinho(List<ItemCarrinhoModel> itensCarrinho) {
-        this.itensCarrinho = itensCarrinho;
-    }
-
-
     public UsuarioModel(String nome, int idade, String email, String telefone, String senha) {
         this.nome = nome;
         this.idade = idade;

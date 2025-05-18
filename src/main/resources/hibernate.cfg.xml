@@ -17,7 +17,6 @@
         <mapping class="api.models.UsuarioModel"/>
         <mapping class="api.models.ProdutoModel"/>
         <mapping class="api.models.ItemPedidoModel"/>
-        <mapping class="api.models.ItemCarrinhoModel"/>
         <mapping class="api.models.PedidoModel"/>
     </session-factory>
 </hibernate-configuration>

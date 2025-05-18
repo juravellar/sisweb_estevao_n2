@@ -1,4 +1,4 @@
-package api.config;
+package api.util;
 
 import api.models.*;
 import org.hibernate.SessionFactory;
@@ -19,7 +19,6 @@ public final class HibernateUtil {
             // Se preferir adicionar classes manualmente:
             cfg.addAnnotatedClass(UsuarioModel.class);
             cfg.addAnnotatedClass(ProdutoModel.class);
-            cfg.addAnnotatedClass(ItemCarrinhoModel.class);
             cfg.addAnnotatedClass(PedidoModel.class);
             cfg.addAnnotatedClass(ItemPedidoModel.class);
 

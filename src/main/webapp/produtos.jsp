@@ -76,8 +76,8 @@
   </form>
 
   <!-- Lista de produtos -->
-  <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-lg">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="mt-10 sm:mx-auto w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
       <c:choose>
         <c:when test="${empty produtos}">
           <p class="text-gray-700 mb-4">Nenhum produto encontrado.</p>
@@ -124,20 +124,26 @@
 
 <script>
   function adicionarAoCarrinho(id) {
+    const formData = new URLSearchParams();
+    formData.append('acao', 'adicionar');
+    formData.append('id', id);
+
     fetch('carrinho', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id })
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formData.toString()
     })
             .then(res => {
               if (res.ok) {
                 alert('Produto adicionado ao carrinho!');
+                // opcional: atualizar a página ou carrinho visual
               } else {
                 alert('Erro ao adicionar produto ao carrinho');
               }
             })
             .catch(() => alert('Erro ao adicionar produto ao carrinho'));
   }
+
 </script>
 </body>
 </html>

@@ -89,14 +89,19 @@
 
 <script>
     function adicionarAoCarrinho(id) {
+        const formData = new URLSearchParams();
+        formData.append('acao', 'adicionar');
+        formData.append('id', id);
+
         fetch('carrinho', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id })
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: formData.toString()
         })
             .then(res => {
                 if (res.ok) {
                     alert('Produto adicionado ao carrinho!');
+                    // opcional: atualizar a página ou carrinho visual
                 } else {
                     alert('Erro ao adicionar produto ao carrinho');
                 }

@@ -1,6 +1,6 @@
 package api.dao;
 
-import api.config.HibernateUtil;
+import api.util.HibernateUtil;
 import api.models.UsuarioModel;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

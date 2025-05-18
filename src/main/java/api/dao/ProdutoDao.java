@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import api.config.HibernateUtil;
+import api.util.HibernateUtil;
 import api.models.ProdutoModel;
 import org.hibernate.query.Query;
 
