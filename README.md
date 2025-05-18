@@ -15,16 +15,15 @@ O objetivo é disponibilizar uma API REST e um front-end simples para demonstrar
 ---
 ## Índice
 
-1. [Diagrama de alto nível](#diagrama-de-alto-nível)  
-2. [Requisitos](#requisitos)  
-3. [Subindo o projeto](#subindo-o-projeto)  
-4. [Coleção de rotas](#coleção-de-rotas)  
-5. [Estrutura de pastas](#estrutura-de-pastas)  
-6. [Variáveis de ambiente](#variáveis-de-ambiente)  
-7. [Scripts úteis](#scripts-úteis)  
-8. [Roadmap](#roadmap)  
-9. [Contribuição](#contribuição)  
-10. [Licença](#licença)
+1. [Requisitos](#requisitos)  
+2. [Subindo o projeto](#subindo-o-projeto)  
+3. [Coleção de rotas](#coleção-de-rotas)  
+4. [Estrutura de pastas](#estrutura-de-pastas)  
+5. [Variáveis de ambiente](#variáveis-de-ambiente)  
+6. [Scripts úteis](#scripts-úteis)  
+7. [Roadmap](#roadmap)  
+8. [Contribuição](#contribuição)  
+9. [Licença](#licença)
 
 ---
 
