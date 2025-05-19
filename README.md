@@ -77,21 +77,20 @@ http://localhost:8080/api/
 > **Nota:** Verifique se as configurações de conexão com o banco estão corretas em `src/main/resources/hibernate.cfg.xml`.
 ---
 
-## Coleção de rotas
+### Coleção de rotas atualizada
 
-| Método | Endpoint          | Descrição                                                        |
-| ------ | ----------------- | ---------------------------------------------------------------- |
-| POST   | /cadastroConta    | Criar uma nova conta de usuário                                  |
-| POST   | /login            | Realizar login do usuário                                        |
-| GET    | /telaInicial      | Tela inicial do usuário logado                                   |
-| GET    | /telaInicialAdmin | Tela inicial para administrador (admin)                          |
-| POST   | /cadastroProduto  | Cadastrar um novo produto                                        |
-| GET    | /produtos         | Buscar/listar produtos com filtros                               |
-| POST   | /produto/editar   | Editar produto existente                                         |
-| POST   | /produto/deletar  | "Excluir" produto (marcar como inativo)                          |
-| GET    | /carrinho         | Mostrar o carrinho do usuário                                    |
-| POST   | /carrinho         | Manipular itens no carrinho (adicionar/remover/finalizar pedido) |
-
+| Método   | Endpoint              | Descrição                                                       |
+| -------- | --------------------- | --------------------------------------------------------------- |
+| **POST** | **/cadastroConta**    | Criar uma nova conta de usuário                                 |
+| **POST** | **/login**            | Realizar login do usuário                                       |
+| **GET**  | **/telaInicial**      | Tela inicial do usuário logado                                  |
+| **GET**  | **/telaInicialAdmin** | Tela inicial para administrador (admin)                         |
+| **POST** | **/produto**          | Cadastrar um novo produto                                       |
+| **GET**  | **/produtos**         | Buscar/listar produtos com filtros                              |
+| **POST** | **/produto/editar**   | Editar produto existente                                        |
+| **POST** | **/produto/deletar**  | “Excluir” produto (marcar como inativo)                         |
+| **GET**  | **/carrinho**         | Mostrar o carrinho do usuário / executar ações via query string |
+| **POST** | **/carrinho**         | Manipular itens no carrinho (adicionar, remover ou finalizar)   |
 
 > A documentação interativa (Swagger/OpenAPI) é gerada automaticamente e pode ser acessada em **/swagger-ui.html**.
 
