@@ -23,12 +23,14 @@ public final class CarrinhoSessionUtil {
 
     public static void add(HttpSession s, int idProd) {
         Map<Integer,Integer> cart = getCarrinho(s);
-        cart.merge(idProd, 1, Integer::sum);
+        cart.put(idProd, cart.getOrDefault(idProd, 0) + 1);
+        s.setAttribute(ATTR, cart);
     }
 
     public static void remove(HttpSession s, int idProd) {
         Map<Integer,Integer> cart = getCarrinho(s);
-        cart.computeIfPresent(idProd, (k,q) -> q > 1 ? q-1 : null);
+        cart.computeIfPresent(idProd, (k, q) -> q > 1 ? q - 1 : null);
+        s.setAttribute(ATTR, cart);
     }
 
     public static void clear(HttpSession s) {

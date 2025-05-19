@@ -62,6 +62,8 @@ public class LoginServlet extends HttpServlet {
         // Usuário comum
         session.setAttribute("tipo", "usuario");
         session.setAttribute("usuario", usuario);
-        req.getRequestDispatcher("telaInicial.jsp").forward(req, resp);
+        resp.sendRedirect("telaInicial.jsp");
+        session.setAttribute("produtos", ProdutoDao.listarTodos());
+
     }
 }

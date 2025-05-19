@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="produtos" value="${sessionScope.produtos}" />
+<c:set var="usuario" value="${sessionScope.usuario}" />
 
 <!DOCTYPE html>
 <html lang="pt-BR">
