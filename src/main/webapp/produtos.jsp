@@ -41,36 +41,48 @@
   </div>
 
   <!-- Filtros e Pesquisa -->
-  <form method="get" action="produtos" class="sm:mx-auto sm:w-full sm:max-w-lg mt-6 mb-6 flex gap-4">
-    <input
-            type="text"
-            name="pesquisa"
-            placeholder="Buscar por nome ou ID"
-            value="${param.pesquisa}"
-            class="flex-grow border rounded p-2"
-    />
-    <input
-            type="number"
-            step="0.01"
-            name="precoMin"
-            placeholder="Preço mínimo"
-            value="${param.precoMin}"
-            class="w-32 border rounded p-2"
-            min="0"
-    />
-    <input
-            type="number"
-            step="0.01"
-            name="precoMax"
-            placeholder="Preço máximo"
-            value="${param.precoMax}"
-            class="w-32 border rounded p-2"
-            min="0"
-    />
-    <button
-            type="submit"
-            class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-500"
-    >
+  <form method="get" action="produtos"
+        class="sm:mx-auto sm:w-full sm:max-w-lg mt-6 mb-6 flex gap-4">
+
+    <!-- texto / id ou nome -->
+    <div class="flex flex-col flex-grow">
+      <label for="busca" class="sr-only">Nome ou ID</label>
+      <input id="busca"
+             type="text"
+             name="busca"
+             placeholder="Buscar por nome ou ID"
+             value="${param.busca}"
+             class="flex-grow border rounded p-2" />
+    </div>
+
+    <!-- preço mínimo -->
+    <div class="flex flex-col w-32">
+      <label for="precoMin" class="sr-only">Preço mínimo</label>
+      <input id="precoMin"
+             type="number"
+             step="0.01"
+             name="precoMin"
+             placeholder="Preço mínimo"
+             value="${param.precoMin}"
+             class="border rounded p-2"
+             min="0" />
+    </div>
+
+    <!-- preço máximo -->
+    <div class="flex flex-col w-32">
+      <label for="precoMax" class="sr-only">Preço máximo</label>
+      <input id="precoMax"
+             type="number"
+             step="0.01"
+             name="precoMax"
+             placeholder="Preço máximo"
+             value="${param.precoMax}"
+             class="border rounded p-2"
+             min="0" />
+    </div>
+
+    <button type="submit"
+            class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-500">
       Filtrar
     </button>
   </form>

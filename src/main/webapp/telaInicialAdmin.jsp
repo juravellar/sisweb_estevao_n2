@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn" %>
 
 <%
-    /* -------- redireciona se não for admin (fica só aqui para acessar HttpSession) -------- */
     String tipo = (String) session.getAttribute("tipo");
     if (!"admin".equals(tipo)) {
         response.sendRedirect(
@@ -78,28 +77,22 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="py-2 px-4 border-b">${p.nome}</td>
                                 <td class="py-2 px-4 border-b">R$ ${p.preco}</td>
-                                <td class="py-2 px-4 border-b text-center space-x-1">
+                                <td class="py-2 px-4 border-b text-center space-x-2">
 
-                                    <!-- EDITAR -->
-                                    <form action="${pageContext.request.contextPath}/produto/editar"
-                                          method="post" class="inline">
-                                        <input type="hidden" name="id"               value="${p.id}">
-                                        <input type="hidden" name="nome-produto"     value="${p.nome}">
-                                        <input type="hidden" name="preco-produto"    value="${p.preco}">
-                                        <input type="hidden" name="descricao-produto"value="${p.descricao}">
-                                        <button class="bg-blue-100 hover:bg-blue-200 text-blue-800
-                                                           py-1 px-2 rounded text-xs">
-                                            Editar
-                                        </button>
-                                    </form>
+                                    <!-- Botão Editar: carrega produto para edição -->
+                                    <a href="telaInicialAdmin?editarId=${p.id}"
+                                       class="bg-blue-100 hover:bg-blue-200 text-blue-800
+                                              py-1 px-2 rounded text-xs inline-block">
+                                        Editar
+                                    </a>
 
-                                    <!-- EXCLUIR -->
-                                    <form action="${pageContext.request.contextPath}/produto/deletar"
-                                          method="post" class="inline"
-                                          onsubmit="return confirm('Tem certeza?');">
-                                        <input type="hidden" name="id" value="${p.id}">
-                                        <button class="bg-red-100 hover:bg-red-200 text-red-800
-                                                           py-1 px-2 rounded text-xs">
+                                    <!-- Botão Excluir -->
+                                    <form action="produto/deletar" method="post" class="inline">
+                                        <input type="hidden" name="id" value="${p.id}" />
+                                        <button type="submit"
+                                                class="bg-red-100 hover:bg-red-200
+                                                       text-red-800 py-1 px-2 rounded text-xs"
+                                                onclick="return confirm('Confirmar exclusão?')">
                                             Excluir
                                         </button>
                                     </form>
@@ -113,37 +106,66 @@
         </c:choose>
     </section>
 
-    <!-- FORMULÁRIO DE CADASTRO -->
-    <form action="${pageContext.request.contextPath}/produto"
-          method="post"
-          class="bg-white p-6 rounded shadow-md space-y-4">
+    <!-- FORMULÁRIO DE CADASTRO / EDIÇÃO -->
+    <section class="bg-white p-6 rounded shadow-md max-w-md mx-auto">
+        <c:set var="produto" value="${produtoEditar}" />
+        <c:set var="isEdicao" value="${not empty produto}" />
 
-        <h3 class="text-xl font-semibold">Adicionar Novo Produto</h3>
+        <form action="produto${isEdicao ? '/editar' : ''}" method="post"
+              class="space-y-4">
 
-        <label class="block">
-            <span class="text-gray-700">Nome do Produto</span>
-            <input name="nome-produto" type="text"
-                   class="mt-1 border rounded p-2 w-full" required>
-        </label>
+            <h3 class="text-xl font-semibold">
+                <c:choose>
+                    <c:when test="${isEdicao}">Editar Produto</c:when>
+                    <c:otherwise>Adicionar Novo Produto</c:otherwise>
+                </c:choose>
+            </h3>
 
-        <label class="block">
-            <span class="text-gray-700">Preço</span>
-            <input name="preco-produto" type="number" step="0.01"
-                   class="mt-1 border rounded p-2 w-full" required>
-        </label>
+            <c:if test="${isEdicao}">
+                <input type="hidden" name="id" value="${produto.id}" />
+            </c:if>
 
-        <label class="block">
-            <span class="text-gray-700">Descrição</span>
-            <input name="descricao-produto" type="text"
-                   class="mt-1 border rounded p-2 w-full" required>
-        </label>
+            <label class="block">
+                <span class="text-gray-700">Nome do Produto</span>
+                <input type="text" name="nome-produto" required
+                       class="mt-1 border rounded p-2 w-full"
+                       value="${isEdicao ? produto.nome : ''}" />
+            </label>
 
-        <button type="submit"
-                class="bg-blue-600 hover:bg-blue-500 text-white p-2 rounded w-full md:w-auto">
-            Adicionar Produto
-        </button>
-    </form>
+            <label class="block">
+                <span class="text-gray-700">Preço</span>
+                <input type="number" step="0.01" name="preco-produto" required
+                       class="mt-1 border rounded p-2 w-full"
+                       value="${isEdicao ? produto.preco : ''}" />
+            </label>
+
+            <label class="block">
+                <span class="text-gray-700">Descrição</span>
+                <input type="text" name="descricao-produto"
+                       class="mt-1 border rounded p-2 w-full"
+                       value="${isEdicao ? produto.descricao : ''}" />
+            </label>
+
+            <button type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-500
+                           text-white p-2 rounded w-full md:w-auto">
+                <c:choose>
+                    <c:when test="${isEdicao}">Salvar Alterações</c:when>
+                    <c:otherwise>Adicionar Produto</c:otherwise>
+                </c:choose>
+            </button>
+
+            <c:if test="${isEdicao}">
+                <a href="telaInicialAdmin"
+                   class="ml-4 text-gray-600 hover:text-gray-900 inline-block mt-2">
+                    Cancelar edição
+                </a>
+            </c:if>
+
+        </form>
+    </section>
 
 </div>
+
 </body>
 </html>

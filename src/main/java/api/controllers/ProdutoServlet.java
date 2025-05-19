@@ -18,16 +18,13 @@ import java.util.Optional;
 })
 public class ProdutoServlet extends HttpServlet {
 
-    /* ============================ GET ============================ */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        // só “/produtos” usa GET
         listarProdutos(req, resp);
     }
 
-    /* =========================== POST ============================ */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -42,7 +39,6 @@ public class ProdutoServlet extends HttpServlet {
         }
     }
 
-    /* ====================== LISTAGEM / BUSCA ===================== */
     private void listarProdutos(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
@@ -69,7 +65,6 @@ public class ProdutoServlet extends HttpServlet {
         req.getRequestDispatcher("produtos.jsp").forward(req, resp);
     }
 
-    /* =========================== CADASTRO ======================== */
     private void cadastrarProduto(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
@@ -85,12 +80,10 @@ public class ProdutoServlet extends HttpServlet {
         try {
             double preco = Double.parseDouble(precoStr);
 
-            boolean jaExiste =
-                    ProdutoDao.buscarPorNome(nome).isPresent() &&
-                            ProdutoDao.buscarPorPreco(preco).isPresent() &&
-                            ProdutoDao.buscarPorDescricao(descricao).isPresent();
+            Optional<ProdutoModel> produtoExistente =
+                    ProdutoDao.buscarPorNomePrecoDescricao(nome, preco, descricao);
 
-            if (jaExiste) {
+            if (produtoExistente.isPresent()) {
                 erro(req, resp, "Produto já cadastrado.");
                 return;
             }
@@ -108,7 +101,7 @@ public class ProdutoServlet extends HttpServlet {
         }
     }
 
-    /* ============================ EDIÇÃO ========================= */
+
     private void editarProduto(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
@@ -146,7 +139,6 @@ public class ProdutoServlet extends HttpServlet {
         }
     }
 
-    /* =========================== EXCLUSÃO ======================== */
     private void deletarProduto(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
@@ -173,7 +165,6 @@ public class ProdutoServlet extends HttpServlet {
         }
     }
 
-    /* ============================= UTIL ========================== */
     private void erro(HttpServletRequest req, HttpServletResponse resp, String msg)
             throws ServletException, IOException {
         req.setAttribute("erro", msg);
