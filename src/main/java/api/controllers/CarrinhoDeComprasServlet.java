@@ -24,12 +24,70 @@ import java.util.Map;
 public class CarrinhoDeComprasServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         HttpSession sess = req.getSession();
         UsuarioModel usuario = (UsuarioModel) sess.getAttribute("usuario");
 
+        if (usuario == null) {
+            resp.sendRedirect("login.jsp");
+            return;
+        }
+
+        String acao = req.getParameter("acao");
+        String idParam = req.getParameter("id");
+
+        // Executa ações se houver
+        if (acao != null) {
+            if (acao.equals("finalizar")) {
+                finalizarPedido(sess, usuario, req, resp);
+                return;
+            }
+
+            if (idParam != null) {
+                try {
+                    int idProd = Integer.parseInt(idParam);
+                    switch (acao) {
+                        case "adicionar" -> CarrinhoSessionUtil.add(sess, idProd);
+                        case "remover" -> CarrinhoSessionUtil.remove(sess, idProd);
+                    }
+                    // Redireciona para evitar reenvio da ação
+                    resp.sendRedirect("carrinho");
+                    return;
+                } catch (NumberFormatException ignored) {
+                }
+            }
+        }
+
+        // Exibição do carrinho
+        Map<Integer, Integer> carrinho = CarrinhoSessionUtil.getCarrinho(sess);
+        Map<Integer, ProdutoModel> detalhes = new HashMap<>();
+
+        if (!carrinho.isEmpty()) {
+            try (Session hs = HibernateUtil.getSessionFactory().openSession()) {
+                hs.createQuery("FROM ProdutoModel WHERE id IN (:ids)", ProdutoModel.class)
+                        .setParameterList("ids", carrinho.keySet())
+                        .list()
+                        .forEach(p -> detalhes.put(p.getId(), p));
+            }
+        }
+
+        req.setAttribute("carrinho", carrinho);
+        req.setAttribute("detalhes", detalhes);
+        req.getRequestDispatcher("carrinho.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost   (HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        HttpSession sess = req.getSession();
+        UsuarioModel usuario = (UsuarioModel) sess.getAttribute("usuario");
+        if (usuario == null) {
+            resp.sendRedirect("login.jsp");
+            return;
+        }
         String acao = req.getParameter("acao");
         int idProd = 0;
         try {
@@ -80,31 +138,4 @@ public class CarrinhoDeComprasServlet extends HttpServlet {
         resp.sendRedirect("pedidoConfirmado.jsp");
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-
-        UsuarioModel usuario = (UsuarioModel) req.getSession().getAttribute("usuario");
-        if (usuario == null) {
-            resp.sendRedirect("login.jsp");
-            return;
-        }
-
-        Map<Integer, Integer> carrinho = CarrinhoSessionUtil.getCarrinho(req.getSession());
-        Map<Integer, ProdutoModel> detalhes = new HashMap<>();
-
-        if (!carrinho.isEmpty()) {
-            try (Session hs = HibernateUtil.getSessionFactory().openSession()) {
-                hs.createQuery("FROM ProdutoModel WHERE id IN (:ids)", ProdutoModel.class)
-                        .setParameterList("ids", carrinho.keySet())
-                        .list()
-                        .forEach(p -> detalhes.put(p.getId(), p));
-            }
-        }
-
-        req.setAttribute("carrinho", carrinho);
-        req.setAttribute("detalhes", detalhes);
-
-        req.getRequestDispatcher("carrinho.jsp").forward(req, resp);
-    }
 }
