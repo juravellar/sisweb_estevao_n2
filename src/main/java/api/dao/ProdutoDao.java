@@ -5,10 +5,10 @@ import java.util.Optional;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import api.util.HibernateUtil;
 import api.models.ProdutoModel;
-import org.hibernate.query.Query;
 
 /**
  * DAO comum com métodos utilitários estáticos e Sessão/Hibernate Try‑with‑resources.
@@ -45,6 +45,19 @@ public class ProdutoDao {
         }
     }
 
+    // NOVO: busca combinada para checar produto duplicado
+    public static Optional<ProdutoModel> buscarPorNomePrecoDescricao(String nome, double preco, String descricao) {
+        try (Session s = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM ProdutoModel p WHERE p.nome = :nome AND p.preco = :preco AND p.descricao = :descricao";
+            Query<ProdutoModel> query = s.createQuery(hql, ProdutoModel.class);
+            query.setParameter("nome", nome);
+            query.setParameter("preco", preco);
+            query.setParameter("descricao", descricao);
+            query.setMaxResults(1);
+            return query.uniqueResultOptional();
+        }
+    }
+
     public static List<ProdutoModel> listarTodos() {
         try (Session s = HibernateUtil.getSessionFactory().openSession()) {
             return s.createQuery("FROM ProdutoModel", ProdutoModel.class).list();
@@ -62,7 +75,7 @@ public class ProdutoDao {
     public static void editar(Optional<ProdutoModel> produto) {
         try (Session s = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tx = s.beginTransaction();
-            s.merge(produto);
+            s.merge(produto.orElseThrow());
             tx.commit();
         }
     }
